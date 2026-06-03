@@ -1,0 +1,16 @@
+DefaultConnectionMethod: !Ssh2
+  AuthMethod: !Key
+    Username: regenter
+    Key:
+      SecRef: ./ssh/private.key
+
+GlobalVars:
+  service_name: bluetooth
+
+Hosts:
+  - Id: my_managed_host
+    Endpoint: localhost
+    HostConnectionMethod: !Ssh2
+      AuthMethod: !UsernamePassword
+        Provider: file
+        SecRef: ./dev/credentials.secret
