@@ -2,11 +2,20 @@
 name = "reg"
 version = "0.1.0"
 edition = "2024"
+authors = ["Romain SUZANNE <r.suzanne@anett.fr>"]
+description = "CLI automation tool based on regent"
+keywords = ["configuration", "devops"]
+license = "Apache-2.0"
+repository = "https://github.com/regent-project/reg.git"
 
 [dependencies]
-clap = { version = "4.6.1", features = ["derive"] }
-regent-sdk = { path = "../regent-sdk"}
-tokio = { version = "1.52.3", features = ["full"] }
+clap = { version = "4.6.6", features = ["derive"] }
+regent-sdk = "0.9.4"
+serde = { version = "1.0.229", features = ["derive"] }
+tokio = { version = "1.53.1", features = ["full"] }
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
+yaml_serde = "0.10.7"
 
+[profile.release]
+lto = true
