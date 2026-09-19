@@ -1,0 +1,36 @@
+name: Build and Release Debian Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-deb:
+    name: Build DEB and Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cargo-deb
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deb
+
+      - name: Build Debian package
+        run: cargo deb --locked
+
+      - name: Release and upload .deb
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/debian/*.deb
+          body_path: CHANGELOG.md
