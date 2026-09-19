@@ -1,6 +1,6 @@
 [package]
 name = "reg"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Romain SUZANNE <r.suzanne@anett.fr>"]
 description = "CLI automation tool based on regent"
@@ -9,8 +9,8 @@ license = "Apache-2.0"
 repository = "https://github.com/regent-project/reg.git"
 
 [dependencies]
-clap = { version = "4.6.6", features = ["derive"] }
-regent-sdk = "0.9.4"
+clap = { version = "4.6.7", features = ["derive"] }
+regent-sdk = "0.11.1"
 serde = { version = "1.0.229", features = ["derive"] }
 tokio = { version = "1.53.1", features = ["full"] }
 tracing = "0.1.44"
@@ -19,3 +19,19 @@ yaml_serde = "0.10.7"
 
 [profile.release]
 lto = true
+
+[package.metadata.deb]
+maintainer = "Romain SUZANNE <r.suzanne@anett.fr>"
+copyright = "2026, Romain SUZANNE <r.suzanne@anett.fr>"
+license-file = ["LICENSE"]
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    ["target/release/reg", "usr/bin/reg", "755"],
+]
+
+[package.metadata.generate-rpm]
+assets = [
+    { source = "target/release/reg", dest = "/usr/bin/reg", mode = "755" },
+]
