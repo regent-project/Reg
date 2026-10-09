@@ -1,0 +1,4 @@
+[Config]
+host = srv.domain.org
+port = 494
+timeout = 150

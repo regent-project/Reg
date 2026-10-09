@@ -1,7 +1,6 @@
-# Release v0.2.0
+# Release v0.4.0
 
-- Based on regent 0.11.1
-- Initial release of Reg
+- Adaptation to regent-sdk 0.13.0
 
 ## Installation & Update
 

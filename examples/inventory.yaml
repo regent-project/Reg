@@ -1,0 +1,11 @@
+DefaultConnectionMethod: !Ssh2
+  AuthMethod: !UsernamePassword
+    Provider: file
+    # SecRef: ./dev/creds-srv1.secret
+    SecRef: ./dev/creds-localhost.secret
+
+Hosts:
+  # - Id: srv-web-2
+  #   Endpoint: 10.24.12.57
+  - Id: local
+    Endpoint: localhost

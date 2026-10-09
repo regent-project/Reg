@@ -1,0 +1,46 @@
+Attributes:
+  - Name: conf file is filled
+    Privilege: !WithSudoRs
+    Timeout: 30
+    Detail: !Template
+      Template: !InLine |
+        [Config]
+        host = {{ host }}
+        port = {{ port }}
+        timeout = {{ 5 * 30 }}
+      Destination: /home/romzor/regent-project/reg/resultat
+      Context:
+        host: srv.domain.org
+        port: 494
+
+
+
+
+
+      # Response: 67.227.199.17
+      # Server: 9.9.9.9
+  # - Name: web portal resolves
+  #   Privilege: !WithSudo
+  #   Timeout: 10
+  #   Detail: !Dns
+  #     DnsName: apache.com
+  #     Response: 67.227.199.17
+  #     Server: 9.9.9.9
+  # - Name: web server is installed
+  #   Privilege: !WithSudo
+  #   Timeout: 10
+  #   Detail: !Apt
+  #     Package: apache2
+  #     State: Present
+  # - Name: webserver is always running
+  #   Privilege: !WithSudo
+  #   Timeout: 1
+  #   Detail: !Service
+  #     Name: apache2
+  #     State: Started
+  #     Enabled: true
+  # - Name: host shutdown
+  #   Privilege: !WithSudo
+  #   Timeout: 1
+  #   Detail: !Command
+  #     Cmd: systemctl poweroff
