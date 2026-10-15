@@ -1,7 +1,7 @@
 Attributes:
   - Name: conf file is filled
     Privilege: !WithSudoRs
-    Timeout: 30
+    Timeout: 30s
     Detail: !Template
       Template: !InLine |
         [Config]

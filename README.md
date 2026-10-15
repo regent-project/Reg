@@ -27,4 +27,7 @@ reg -h
 reg -i /path/to/inventory.yaml -s /path/to/expected_state_description.yaml -m assess 
 # Enforce compliance
 reg -i /path/to/inventory.yaml -s /path/to/expected_state_description.yaml -m enforce 
+# Validate the inventory and/or the expected state description (YAML syntax and deserialization)
+reg -i /path/to/inventory.yaml -m validate
+reg -i /path/to/inventory.yaml -s /path/to/expected_state_description.yaml -m validate
 ```
