@@ -1,6 +1,6 @@
 [package]
 name = "reg"
-version = "0.6.0"
+version = "0.7.0"
 edition = "2024"
 authors = ["Romain SUZANNE <r.suzanne@anett.fr>"]
 description = "CLI automation tool based on regent"
@@ -10,9 +10,9 @@ repository = "https://github.com/regent-project/reg.git"
 
 [dependencies]
 clap = { version = "4.6.7", features = ["derive"] }
-regent-sdk = "0.15.1"
+regent-sdk = "0.16.0"
 serde = { version = "1.0.229", features = ["derive"] }
-tokio = { version = "1.53.2", features = ["full"] }
+tokio = { version = "1.53.3", features = ["full"] }
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
 yaml_serde = "0.10.7"
