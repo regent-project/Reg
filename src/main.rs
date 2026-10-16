@@ -177,8 +177,9 @@ async fn run_compliance(inventory_path: &str, state_path: &str, mode: &Mode) {
                 }
             }
         }
-        Err(error_detail) => {
-            error!("Other error : {error_detail}");
+        Err(_error_detail) => {
+            // Not showing the error details here as they are already logged by regent-sdk
+            error!("Compliance not reached");
         }
     }
 }

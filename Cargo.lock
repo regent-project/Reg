@@ -931,9 +931,9 @@ dependencies = [
 
 [[package]]
 name = "inout"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d8c0d789294fb457b791f7797a04478704788f30b407e5d0b01deaa846572d9f"
+checksum = "3ce983bb6fb399067d101fbfc9e74174e07e9f29a2bc679efefeb8c645819c3f"
 dependencies = [
  "block-padding",
  "hybrid-array",
@@ -1000,9 +1000,9 @@ checksum = "20870f649af7073d53e38067b2a84312175d56ea15217e1b15bc83506ec50afb"
 
 [[package]]
 name = "libc"
-version = "0.2.190"
+version = "0.2.191"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
+checksum = "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a"
 
 [[package]]
 name = "libyaml-rs"
@@ -1474,7 +1474,7 @@ dependencies = [
 
 [[package]]
 name = "reg"
-version = "0.7.0"
+version = "0.7.1"
 dependencies = [
  "clap",
  "regent-sdk",
@@ -1487,9 +1487,7 @@ dependencies = [
 
 [[package]]
 name = "regent-sdk"
-version = "0.16.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "26790533a6a34e227773ca226b54954bb0b7dbb889e5776079a4e5e4d1d3eb0a"
+version = "0.16.1"
 dependencies = [
  "bytes",
  "chrono",

@@ -1,8 +1,10 @@
-# Release v0.7.0
+# Release v0.7.1
 
-- Updated to use regent-sdk 0.16.0 : new storage attribute, multiple API revisited
+## What's Changed
 
-## Installation & Update
+- Updated to use regent-sdk 0.16.1
+- Multiple fixes and improvement, especially on Storage
+
 
 ### Debian
 Download the `.deb` package and install it using:
