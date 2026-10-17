@@ -1,11 +1,8 @@
-# Release v0.7.2
+# Release v0.7.3
 
 ## What's Changed
 
-- Updated to use regent-sdk 0.16.1
-- Multiple fixes and improvement, especially on Storage
-- Fix Cargo.toml dependency
-
+- Updated to use regent-sdk 0.16.3
 
 ### Debian
 Download the `.deb` package and install it using:

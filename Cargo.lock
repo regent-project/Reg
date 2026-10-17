@@ -1475,7 +1475,7 @@ dependencies = [
 
 [[package]]
 name = "reg"
-version = "0.7.2"
+version = "0.7.3"
 dependencies = [
  "clap",
  "regent-sdk",
@@ -1488,9 +1488,9 @@ dependencies = [
 
 [[package]]
 name = "regent-sdk"
-version = "0.16.1"
+version = "0.16.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44b0fd9228df9062d7de9983963552f0654cfef6f44169da26ddcf77f7bba5aa"
+checksum = "868c8093077ebe191330604d564af6adcc1edb17e92acea05733755d9de03078"
 dependencies = [
  "bytes",
  "chrono",
