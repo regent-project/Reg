@@ -1,9 +1,10 @@
-# Release v0.7.1
+# Release v0.7.2
 
 ## What's Changed
 
 - Updated to use regent-sdk 0.16.1
 - Multiple fixes and improvement, especially on Storage
+- Fix Cargo.toml dependency
 
 
 ### Debian
