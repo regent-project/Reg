@@ -1,22 +1,45 @@
 Attributes:
-  - Name: conf file is filled
+  - Name: docker is always running
     Privilege: !WithSudoRs
-    Timeout: 30s
-    Detail: !Template
-      Template: !InLine |
-        [Config]
-        host = {{ host }}
-        port = {{ port }}
-        timeout = {{ 5 * 30 }}
-      Destination: /home/romzor/regent-project/reg/resultat
-      Context:
-        host: srv.domain.org
-        port: 494
+    Detail: !Service
+      Name: docker
+      State: Started
+      Enabled: true
+
+  # - Name: filesystem has enough free space
+  #   Privilege: !WithSudoRs
+  #   Timeout: 20s
+  #   Detail: !Storage
+  #     Target: !FileSystem /dev/sda3
+  #     Threshold: !PercentUsed 15
+  #     Cleanup:
+  #       - docker system prune -af
+  #       - rm -f /run/media/romzor/Pro/*.bin
 
 
 
 
 
+
+
+
+
+
+
+
+  # - Name: conf file is filled
+  #   Privilege: !WithSudoRs
+  #   Timeout: 30s
+  #   Detail: !Template
+  #     Template: !InLine |
+  #       [Config]
+  #       host = {{ host }}
+  #       port = {{ port }}
+  #       timeout = {{ 5 * 30 }}
+  #     Destination: /home/romzor/regent-project/reg/resultat
+  #     Context:
+  #       host: srv.domain.org
+  #       port: 494
       # Response: 67.227.199.17
       # Server: 9.9.9.9
   # - Name: web portal resolves

@@ -1,11 +1,26 @@
 DefaultConnectionMethod: !Ssh2
-  AuthMethod: !UsernamePassword
-    Provider: file
-    # SecRef: ./dev/creds-srv1.secret
-    SecRef: ./dev/creds-localhost.secret
+  AuthMethod: !Key
+    Username: regenter
+    Key:
+      SecRef: ./ssh/private.key
+
+GlobalVars:
+  service_name: bluetooth
 
 Hosts:
-  # - Id: srv-web-2
-  #   Endpoint: 10.24.12.57
-  - Id: local
-    Endpoint: localhost
+  - Id: localhost-through-ssh2
+    Endpoint: "localhost:22"
+    HostConnectionMethod: !Ssh2
+      AuthMethod: !UsernamePassword
+        SecRef: ./dev/creds-localhost.secret
+        Provider: file
+  - Id: localhost-through-sshoq
+    Endpoint: "localhost:4433"
+    HostConnectionMethod: !Sshoq
+      Path: /secret-path
+      AuthMethod: !Key
+        Username: romzor
+        Key:
+          SecRef: /home/romzor/.ssh/id_ed25519
+          Provider: file
+      TlsConfig: !Insecure
