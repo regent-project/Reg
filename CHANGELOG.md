@@ -1,8 +1,8 @@
-# Release v0.8.0
+# Release v0.9.0
 
 ## What's Changed
 
-- Updated to use regent-sdk 0.17.0 (SSHOQ introduction)
+- Updated to use regent-sdk 0.18.0
 
 ### Debian
 Download the `.deb` package and install it using:
