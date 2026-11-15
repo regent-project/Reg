@@ -1,0 +1,86 @@
+# Use case 1: configuration management (server baseline)
+#
+# Every server gets the same base configuration: tools installed, time kept in
+# sync, an admin account, SSH hardened, a welcome message and a scheduled job.
+# Run it again at any time: what already complies is left untouched, what
+# drifted is put back.
+
+Attributes:
+  # --- Packages and services
+  - Name: base tools are installed
+    Privilege: !WithSudo
+    Detail: !Apt
+      Package: curl
+      State: Present
+
+  - Name: time synchronization is installed
+    Privilege: !WithSudo
+    Detail: !Apt
+      Package: chrony
+      State: Present
+
+  - Name: time synchronization is running
+    Privilege: !WithSudo
+    Detail: !Service
+      Name: chrony
+      State: Started
+      Enabled: true
+
+  # --- Accounts
+  - Name: admin group exists
+    Privilege: !WithSudo
+    Detail: !Group
+      Name: admins
+      State: !Present {}
+
+  - Name: admin account exists
+    Privilege: !WithSudo
+    Detail: !User
+      Name: "{{ admin_user }}"
+      State: !Present
+        Details:
+          Shell: /bin/bash
+          Comment: "{{ admin_comment }}"
+          Groups: [admins, sudo]
+          Append: true
+          CreateHome: true
+
+  # --- SSH hardening (read by sshd when it starts or reloads)
+  - Name: root cannot log in over SSH
+    Privilege: !WithSudo
+    Detail: !LineInFile
+      FilePath: /etc/ssh/sshd_config.d/50-baseline.conf
+      State: !Present
+        Create: true
+      Line: !Raw "PermitRootLogin no"
+
+  - Name: SSH password login is disabled
+    Privilege: !WithSudo
+    Detail: !LineInFile
+      FilePath: /etc/ssh/sshd_config.d/50-baseline.conf
+      State: !Present
+        Create: true
+      Line: !Raw "PasswordAuthentication no"
+
+  # --- Files rendered from templates (Tera). A template sees the variables of its
+  # Context, whose values can come from the inventory's variables.
+  - Name: welcome message
+    Privilege: !WithSudo
+    Detail: !Template
+      Template: !InLine |
+        {{ host }} ({{ env }}) - managed by regent, local changes will be reverted.
+      Destination: /etc/motd
+      Context:
+        host: "{{ hostname }}"
+        env: "{{ environment }}"
+
+  # --- Scheduled jobs
+  - Name: old temporary files are cleaned every day
+    Privilege: !WithSudo
+    Detail: !Cron
+      Name: clean-tmp
+      Schedule: !SpecialTime Daily
+      Command: find /tmp -type f -mtime +7 -delete
+      State: Present
+      Target:
+        Crontab: null # root's crontab

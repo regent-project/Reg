@@ -1,0 +1,17 @@
+# Inventory with the machine reg runs on, to try the examples without any server.
+# Start with `-m assess` (read-only): enforcing changes this machine. The examples
+# escalate with sudo (`Privilege: !WithSudo`), which must not ask for a password.
+
+GlobalVars:
+  admin_user: ops
+  admin_comment: Operations team
+  environment: test
+  app_version: "1.27"
+
+Hosts:
+  - Id: localhost
+    Endpoint: localhost
+    HostConnectionMethod: !Localhost
+      UserKind: CurrentUser
+    HostVars:
+      hostname: localhost

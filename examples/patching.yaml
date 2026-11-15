@@ -1,0 +1,37 @@
+# Use case 3: patching (system updates)
+#
+# Keeps servers up to date: every package at its latest version, automatic
+# security updates in between, and enough disk space left for the next
+# updates. `-m assess` lists the servers with pending updates without touching
+# them; `-m enforce` applies the updates.
+
+Attributes:
+  - Name: package lists are fresh and every package is up to date
+    Privilege: !WithSudo
+    Timeout: 30m
+    Detail: !Apt
+      SystemUpToDate
+
+  - Name: automatic security updates are installed
+    Privilege: !WithSudo
+    Detail: !Apt
+      Package: unattended-upgrades
+      State: Present
+
+  - Name: automatic security updates are started and enabled
+    Privilege: !WithSudo
+    Detail: !Service
+      Name: unattended-upgrades
+      State: Started
+      Enabled: true
+
+  - Name: root filesystem keeps 10% free for updates
+    Privilege: !WithSudo
+    Timeout: 2m
+    Detail: !Storage
+      Target: !FileSystem /
+      Threshold: !PercentUsed 90
+      Cleanup:
+        - apt-get clean
+        - apt-get autoremove -y
+        - journalctl --vacuum-time=7d

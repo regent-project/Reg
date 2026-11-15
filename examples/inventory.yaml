@@ -1,26 +1,39 @@
+# Inventory: the hosts to manage and how to reach them.
+#
+# Three Debian/Ubuntu servers reached over SSH with a key, as user `regent`
+# (allowed to run sudo without a password). Paths are relative to the directory
+# where reg is started.
+
 DefaultConnectionMethod: !Ssh2
   AuthMethod: !Key
-    Username: regenter
+    Username: regent
     Key:
-      SecRef: ./ssh/private.key
+      SecRef: ./ssh/id_ed25519
+      Provider: file
+  # Verify the servers' identity (without it, any host key is accepted)
+  HostKey: !KnownHostsFile ./ssh/known_hosts
 
+# Variables available to every attribute of the expected state ({{ name }}),
+# overridden per host by its HostVars
 GlobalVars:
-  service_name: bluetooth
+  admin_user: ops
+  admin_comment: Operations team
+  environment: production
+  app_version: "1.27"
 
 Hosts:
-  - Id: localhost-through-ssh2
-    Endpoint: "localhost:22"
-    HostConnectionMethod: !Ssh2
-      AuthMethod: !UsernamePassword
-        SecRef: ./dev/creds-localhost.secret
-        Provider: file
-  - Id: localhost-through-sshoq
-    Endpoint: "localhost:4433"
-    HostConnectionMethod: !Sshoq
-      Path: /secret-path
-      AuthMethod: !Key
-        Username: romzor
-        Key:
-          SecRef: /home/romzor/.ssh/id_ed25519
-          Provider: file
-      TlsConfig: !Insecure
+  - Id: srv1
+    Endpoint: "192.0.2.11:22"
+    HostVars:
+      hostname: srv1
+  - Id: srv2
+    Endpoint: "192.0.2.12:22"
+    HostVars:
+      hostname: srv2
+  - Id: srv3
+    Endpoint: "192.0.2.13:22"
+    HostVars:
+      hostname: srv3
+      # A staging server, running the next version
+      environment: staging
+      app_version: "1.28"

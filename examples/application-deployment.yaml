@@ -1,0 +1,48 @@
+# Use case 2: application deployment
+#
+# Deploys a web application as a container: the container runtime is installed
+# and running, then the application runs from a given image version, with its
+# settings and a secret token. Deploying a new version = changing `app_version`
+# in the inventory (per host if needed) and enforcing again.
+#
+# The token is read on the machine running reg, from the environment variable
+# APP_API_TOKEN (reg's default secret provider):
+#   APP_API_TOKEN=... reg -i inventory.yaml -s application-deployment.yaml -m enforce
+# It is shown as ******** in the live view and the logs.
+
+Attributes:
+  - Name: container runtime is installed
+    Privilege: !WithSudo
+    Detail: !Apt
+      Package: docker.io
+      State: Present
+
+  - Name: container runtime is running
+    Privilege: !WithSudo
+    Detail: !Service
+      Name: docker
+      State: Started
+      Enabled: true
+
+  - Name: web application is running
+    Privilege: !WithSudo
+    Timeout: 5m # first deployment: the image is downloaded
+    Detail: !Docker
+      Name: webapp
+      State: !Running
+        Image: "nginx:{{app_version}}"
+        Pull: Missing
+        Env:
+          APP_ENVIRONMENT: "{{ environment }}"
+          API_TOKEN:
+            SecRef: APP_API_TOKEN
+        Networking: !Attached
+          Ports:
+            - "8080:80"
+        RestartPolicy: UnlessStopped
+        HealthCheck:
+          Test: curl -f http://localhost || exit 1
+          Interval: 30s
+          Timeout: 5s
+          Retries: 3
+        Memory: 512m
